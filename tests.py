@@ -2,6 +2,7 @@ import unittest
 
 from app.get_data import run_profile, APIError
 
+
 class TestGetData(unittest.TestCase):
 
     def test_mailchimp(self):
@@ -38,6 +39,7 @@ class TestGetData(unittest.TestCase):
             run_profile('fake1234556', 'fake1234556')
         except APIError as e:
             self.assertEqual(e.status_code, 404)
+
 
 if __name__ == '__main__':
     unittest.main()

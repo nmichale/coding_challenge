@@ -11,6 +11,7 @@ logger.setLevel(logging.INFO)
 
 REQUIRED_ARGS = ['github_org', 'bitbucket_org']
 
+
 @app.route('/profile', methods=['GET'])
 def profile() -> Response:
     """
