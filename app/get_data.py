@@ -6,7 +6,7 @@ from collections import defaultdict
 from typing import List, Callable
 
 GITHUB_REPO_URL = 'https://api.github.com/orgs/{}/repos'
-GITHUB_TOKEN = 'token 5f7c674b69aa04389c052cde19f12909f8dabb84'
+GITHUB_TOKEN = 'token b58e0f765b5e040847da363c0f2b67588d49ba3e'
 GITHUB_HEADERS = {'Accept': 'application/vnd.github.v3+json', 'Authorization': GITHUB_TOKEN}
 GITHUB_HEADERS_TOPICS = {'Accept': 'application/vnd.github.mercy-preview+json', 'Authorization': GITHUB_TOKEN}
 
