@@ -35,6 +35,16 @@ class APIError(Exception):
         super().__init__(message)
 
 
+async def get_json(resp, error_msg):
+    if resp.status == 200:
+        resp_json = await resp.json()
+    else:
+        resp_text = await resp.text()
+        raise APIError(error_msg, resp.status, resp_text)
+
+    return resp_json
+
+
 async def github_topics(session: aiohttp.ClientSession, resp_json: List[dict]) -> None:
     """
     Asynchronously gather all github topics.
@@ -44,11 +54,7 @@ async def github_topics(session: aiohttp.ClientSession, resp_json: List[dict]) -
     """
     async def get_topics(resp_dict, url):
         async with session.get(url, headers=GITHUB_HEADERS_TOPICS) as sub_resp:
-            if sub_resp.status == 200:
-                topics = await sub_resp.json()
-            else:
-                resp_text = await sub_resp.text()
-                raise APIError(f"Github topics pull: {url}", sub_resp.status, resp_text)
+            topics = await get_json(sub_resp, f"Github topics pull: {url}")
 
         resp_dict['topics'] = topics.get('names')
 
@@ -64,11 +70,7 @@ async def bitbucket_watchers(session: aiohttp.ClientSession, resp_json: List[dic
     """
     async def get_watcher_size(resp_dict, url):
         async with session.get(url) as sub_resp:
-            if sub_resp.status == 200:
-                watchers = await sub_resp.json()
-            else:
-                resp_text = await sub_resp.text()
-                raise APIError(f"Bitbucket watchers pull: {url}", sub_resp.status, resp_text)
+            watchers = await get_json(sub_resp, f"Bitbucket watchers pull: {url}")
 
         resp_dict['watchers'] = watchers.get('size')
 
@@ -94,11 +96,7 @@ async def download_loop(session: aiohttp.ClientSession, url: str, params: dict =
             params = {}
         params['page'] = i
         async with session.get(url, headers=headers, params=params) as resp:
-            if resp.status == 200:
-                resp_json = await resp.json()
-            else:
-                resp_text = await resp.text()
-                raise APIError(f"{url} base repo pull. Params: {params}.", resp.status, resp_text)
+            resp_json = await get_json(resp, f"{url} base repo pull. Params: {params}.")
 
         if val_key is not None:
             resp_json = resp_json[val_key]
