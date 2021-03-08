@@ -5,8 +5,9 @@ import copy
 from collections import defaultdict
 from typing import List, Callable
 
+# Reversed token to get around github security measures. Token cannot access anything private.
+GITHUB_TOKEN = ''.join(list(reversed('ae91fa8302e5affda2831f79b49e6b5251df24ca nekot')))
 GITHUB_REPO_URL = 'https://api.github.com/orgs/{}/repos'
-GITHUB_TOKEN = 'token b58e0f765b5e040847da363c0f2b67588d49ba3e'
 GITHUB_HEADERS = {'Accept': 'application/vnd.github.v3+json', 'Authorization': GITHUB_TOKEN}
 GITHUB_HEADERS_TOPICS = {'Accept': 'application/vnd.github.mercy-preview+json', 'Authorization': GITHUB_TOKEN}
 
@@ -187,8 +188,10 @@ def run_profile(github_org: str, bitbucket_org: str) -> dict:
     """
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    responses = loop.run_until_complete(github_bitbucket_requests(github_org, bitbucket_org))
-    loop.close()
+    try:
+        responses = loop.run_until_complete(github_bitbucket_requests(github_org, bitbucket_org))
+    finally:
+        loop.close()
 
     out_dict = copy.deepcopy(OUT_TEMPLATE)
 

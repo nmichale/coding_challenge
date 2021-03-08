@@ -31,7 +31,7 @@ def profile() -> Response:
     except get_data.APIError as e:
         return Response(str(e), status=e.status_code)
     except Exception as e:
-        return Response(f"Unexpected error: {str(e)}", response=500)
+        return Response(f"Unexpected error: {str(e)}", status=500)
 
 
 @app.route("/health-check", methods=["GET"])
