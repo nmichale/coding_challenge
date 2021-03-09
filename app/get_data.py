@@ -40,9 +40,9 @@ async def get_json(resp: aiohttp.request, error_msg: str) -> List[dict]:
     """
     Get the JSON from a request or throw an error if return code != 200.
 
-    @param resp:
-    @param error_msg:
-    @return:
+    @param resp: aiohttp response object
+    @param error_msg: What text you'd like displayed fit there is an error with the request.
+    @return: Response in parsed JSON format.
     """
     if resp.status == 200:
         resp_json = await resp.json()
