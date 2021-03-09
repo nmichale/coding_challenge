@@ -36,7 +36,14 @@ class APIError(Exception):
         super().__init__(message)
 
 
-async def get_json(resp, error_msg):
+async def get_json(resp: aiohttp.request, error_msg: str) -> List[dict]:
+    """
+    Get the JSON from a request or throw an error if return code != 200.
+
+    @param resp:
+    @param error_msg:
+    @return:
+    """
     if resp.status == 200:
         resp_json = await resp.json()
     else:
