@@ -166,7 +166,7 @@ our problem?
     link. This includes github topics and bitbucket watchers.
     - One way to increase parallelism would be grabbing all pages at once. However, the github API doesn't give the 
     max page, so this was not possible with it -- it would be possible with bitbucket however.
-- I could not find anything for Bitbucket in terms of topics.
+- I could not find anything on Bitbucket that would be able to determine if it was a forked repo and I also couldn't find any topics.
 
 ## What'd I'd like to improve on...
 
