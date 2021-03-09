@@ -132,7 +132,8 @@ Response:
 python -m unittest tests
 ```
 
-Note: There may be some miscellaneous warnings or unthrown exceptions with this from the asyncio library, but the 
+Note: There may be some miscellaneous warnings or unthrown exceptions with this from the asyncio library, but they
+can safely be ignored.
 
 ## Considerations
 
